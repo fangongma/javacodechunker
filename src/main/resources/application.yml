@@ -34,6 +34,3 @@ code-chunker:
 
 logging:
   config: classpath:log4j2.xml
-  level:
-    com.codeparser.chunker: INFO
-    com.github.javaparser: WARN
