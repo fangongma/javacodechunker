@@ -1,8 +1,6 @@
 package jp.co.jri.codechunker.service;
 
-import jp.co.jri.codechunker.model.ClassChunk;
-import jp.co.jri.codechunker.model.MethodChunk;
-import jp.co.jri.codechunker.model.ProjectAnalysisResult;
+import jp.co.jri.codechunker.model.*;
 import jp.co.jri.codechunker.util.FileFinder;
 import jp.co.jri.codechunker.util.MetricsCalculator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +18,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -127,19 +127,17 @@ public class JavaProjectChunkerService {
         String className = typeDecl.getNameAsString();
 
         ClassChunk.ClassChunkBuilder builder = ClassChunk.builder()
-                .chunkId(generateChunkId(filePath, className, type))
-                .className(className)
-                .type(type)
-                .packageName(packageName)
-                .filePath(filePath.toAbsolutePath().toString())
-                .fullyQualifiedName(packageName.isEmpty() ?
-                        className : packageName + "." + className);
+                .name(className)
+                .kind(Kind.CLASS)
+                .chunkId(packageName)
+                .filePath(filePath.toAbsolutePath().toString());
 
         // Line information
         typeDecl.getRange().ifPresent(range -> {
-            builder.startLine(range.begin.line)
-                    .endLine(range.end.line)
-                    .totalLines(range.end.line - range.begin.line + 1);
+//            builder.startLine(range.begin.line)
+//                    .endLine(range.end.line)
+//                    .totalLines(range.end.line - range.begin.line + 1);
+            builder.location(new Location(range.begin.line, range.end.line));
         });
 
         // Modifiers
@@ -148,33 +146,36 @@ public class JavaProjectChunkerService {
         builder.modifiers(modifiers);
 
         // Counts
-        builder.methodCount(typeDecl.getMethods().size())
-                .fieldCount(typeDecl.getFields().size());
+//        builder.methodCount(typeDecl.getMethods().size())
+//                .fieldCount(typeDecl.getFields().size());
 
         // Dependencies
         List<String> dependencies = new ArrayList<>();
         typeDecl.findCompilationUnit().ifPresent(cu ->
                 cu.getImports().forEach(imp -> dependencies.add(imp.getNameAsString())));
-        builder.dependencies(dependencies);
+        builder.imports(dependencies);
 
         // Inheritance
         if (typeDecl instanceof ClassOrInterfaceDeclaration) {
             ClassOrInterfaceDeclaration classDecl = (ClassOrInterfaceDeclaration) typeDecl;
             List<String> extendedClasses = new ArrayList<>();
             classDecl.getExtendedTypes().forEach(ext -> extendedClasses.add(ext.getNameAsString()));
-            builder.extendedClasses(extendedClasses);
+//            builder.extendedClasses(extendedClasses);
 
             List<String> implementedInterfaces = new ArrayList<>();
             classDecl.getImplementedTypes().forEach(imp -> implementedInterfaces.add(imp.getNameAsString()));
-            builder.implementedInterfaces(implementedInterfaces);
+//            builder.implementedInterfaces(implementedInterfaces);
+
+            builder.parent(new ParentRef(packageName, Stream.concat(extendedClasses.stream(), implementedInterfaces.stream()).collect(Collectors.toList())));
         }
 
         // Code snippet
         String code = typeDecl.toString();
-        builder.codeSnippet(code.length() > 200 ? code.substring(0, 200) + "..." : code);
+//        builder.codeSnippet(code.length() > 200 ? code.substring(0, 200) + "..." : code);
+        builder.code(code);
 
         // Complexity
-        builder.complexityScore(metricsCalculator.calculateComplexity(typeDecl));
+ //       builder.complexityScore(metricsCalculator.calculateComplexity(typeDecl));
 
         return builder.build();
     }
