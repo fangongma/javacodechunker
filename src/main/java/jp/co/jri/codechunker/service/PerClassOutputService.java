@@ -1,8 +1,7 @@
 package jp.co.jri.codechunker.service;
 
 import jp.co.jri.codechunker.config.ApplicationProperties;
-import jp.co.jri.codechunker.model.ClassChunk;
-import jp.co.jri.codechunker.model.MethodChunk;
+import jp.co.jri.codechunker.model.*;
 import jp.co.jri.codechunker.util.FileFinder;
 import jp.co.jri.codechunker.util.MetricsCalculator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +21,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -84,11 +85,19 @@ public class PerClassOutputService {
                         saveClassChunkToJson(classChunk, outputDir);
                         totalClasses++;
 
+//                        summary.addClassFile(
+//                                generateFileName(classChunk.getFullyQualifiedName(), "class"),
+//                                classChunk.getFullyQualifiedName(),
+//                                classChunk.getType(),
+//                                classChunk.getMethodCount(),
+//                                "CLASS"
+//                        );
+
                         summary.addClassFile(
-                                generateFileName(classChunk.getFullyQualifiedName(), "class"),
-                                classChunk.getFullyQualifiedName(),
-                                classChunk.getType(),
-                                classChunk.getMethodCount(),
+                                "fullyqualifiedname",
+                                "fullyqualifiedname",
+                                "class",
+                                999,
                                 "CLASS"
                         );
                     }
@@ -349,20 +358,20 @@ public class PerClassOutputService {
                                         String packageName, String type) {
         String className = typeDecl.getNameAsString();
 
-        ClassChunk.ClassChunkBuilder builder = ClassChunk.builder()
-                .chunkId(generateChunkId(filePath, className, type))
-                .className(className)
-                .type(type)
-                .packageName(packageName)
-                .filePath(filePath.toAbsolutePath().toString())
-                .fullyQualifiedName(packageName.isEmpty() ?
-                        className : packageName + "." + className);
+        ClassChunk.ClassChunkBuilder builder = ClassChunk.builder();
+                //.chunkId(generateChunkId(filePath, className, type))
+                //.className(className)
+                //.type(type)
+                //.packageName(packageName)
+                //.filePath(filePath.toAbsolutePath().toString())
+                //.fullyQualifiedName(packageName.isEmpty() ? className : packageName + "." + className);
 
         // Line information
         typeDecl.getRange().ifPresent(range -> {
-            builder.startLine(range.begin.line)
-                    .endLine(range.end.line)
-                    .totalLines(range.end.line - range.begin.line + 1);
+//            builder.startLine(range.begin.line)
+//                    .endLine(range.end.line)
+//                    .totalLines(range.end.line - range.begin.line + 1);
+            builder.location(new Location(range.begin.line, range.end.line));
         });
 
         // Modifiers
@@ -371,10 +380,11 @@ public class PerClassOutputService {
             modifiers.add(mod.toString());
         }
         builder.modifiers(modifiers);
+        //builder.modifiers2(modifiers);
 
         // Counts
-        builder.methodCount(typeDecl.getMethods().size())
-                .fieldCount(typeDecl.getFields().size());
+//        builder.methodCount(typeDecl.getMethods().size())
+//                .fieldCount(typeDecl.getFields().size());
 
         // Dependencies
         List<String> dependencies = new ArrayList<>();
@@ -383,7 +393,8 @@ public class PerClassOutputService {
                 dependencies.add(imp.getNameAsString());
             }
         });
-        builder.dependencies(dependencies);
+//        builder.dependencies(dependencies);
+        builder.imports(dependencies);
 
         // Inheritance
         if (typeDecl instanceof ClassOrInterfaceDeclaration) {
@@ -392,23 +403,50 @@ public class PerClassOutputService {
             for (com.github.javaparser.ast.type.ClassOrInterfaceType ext : classDecl.getExtendedTypes()) {
                 extendedClasses.add(ext.getNameAsString());
             }
-            builder.extendedClasses(extendedClasses);
 
             List<String> implementedInterfaces = new ArrayList<>();
             for (com.github.javaparser.ast.type.ClassOrInterfaceType imp : classDecl.getImplementedTypes()) {
                 implementedInterfaces.add(imp.getNameAsString());
             }
-            builder.implementedInterfaces(implementedInterfaces);
+
+            builder.parent(new ParentRef(packageName, Stream.concat(extendedClasses.stream(), implementedInterfaces.stream()).collect(Collectors.toList())));
         }
 
         // Code snippet
         String code = typeDecl.toString();
         int maxSnippetLength = properties.getChunk().getMaxSnippetLength();
-        builder.codeSnippet(code.length() > maxSnippetLength ?
-                code.substring(0, maxSnippetLength) + "..." : code);
+        logger.debug("maxSnippetLength = ", maxSnippetLength);
+        logger.debug("code length = ", code);
+//        builder.codeSnippet(code.length() > maxSnippetLength ?
+//                code.substring(0, maxSnippetLength) + "..." : code);
+        builder.code(code);
 
         // Complexity
-        builder.complexityScore(metricsCalculator.calculateComplexity(typeDecl));
+//        builder.complexityScore(metricsCalculator.calculateComplexity(typeDecl));
+
+        Symbols.SymbolsBuilder symbolsBuilder = Symbols.builder();
+        symbolsBuilder.classes(null);
+        symbolsBuilder.methods(null);
+        symbolsBuilder.fields(null);
+        symbolsBuilder.variables(null);
+
+        Notes.NotesBuilder notesBuilder = Notes.builder();
+        notesBuilder.missingData(null);
+        notesBuilder.extractionWarnings(null);
+
+        builder.language("java")
+                .filePath(filePath.toAbsolutePath().toString())
+                .chunkId(packageName)
+                .kind(Kind.CLASS)
+                .name(className)
+                //.parent(packageName.isEmpty() ? className : packageName + "." + className)
+                .signature("siganture")
+                //.location()
+                //.imports()
+                //.modifiers2()
+                .symbols(symbolsBuilder.build())
+                //.code2()
+                .notes(notesBuilder.build());
 
         return builder.build();
     }
@@ -501,7 +539,8 @@ public class PerClassOutputService {
      * Saves a single class chunk to JSON file (class-level output)
      */
     private void saveClassChunkToJson(ClassChunk classChunk, String outputDir) throws IOException {
-        String fileName = generateFileName(classChunk.getFullyQualifiedName(), "class");
+        //String fileName = generateFileName(classChunk.getFullyQualifiedName(), "class");
+        String fileName = "test.class";
         File outputFile = new File(outputDir, fileName);
 
         try (FileWriter writer = new FileWriter(outputFile)) {

@@ -16,65 +16,108 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "chunkId", "chunkType", "className", "type", "packageName",
-        "filePath", "fullyQualifiedName", "startLine", "endLine",
-        "totalLines", "modifiers", "methodCount", "fieldCount",
-        "dependencies", "extendedClasses", "implementedInterfaces",
-        "codeSnippet", "complexityScore"
+        //"chunkId", "chunkType", "className", "type", "packageName",
+        //"filePath", "fullyQualifiedName", "startLine", "endLine",
+        //"totalLines", "modifiers", "methodCount", "fieldCount",
+        //"dependencies", "extendedClasses", "implementedInterfaces",
+        //"codeSnippet", "complexityScore",
+        "language", "filePath2", "chunkId2",
+        "kind", "name", "parent", "signature", "location", "imports",
+        "modifiers2", "symbols", "code2", "notes"
 })
 public class ClassChunk {
 
-    @JsonProperty("chunkId")
-    private String chunkId;
+//    @JsonProperty("chunkId")
+//    private String chunkId;
+//
+//    @JsonProperty("chunkType")
+//    private String chunkType = "CLASS";
+//
+//    @JsonProperty("className")
+//    private String className;
+//
+//    @JsonProperty("type")
+//    private String type; // CLASS, INTERFACE, ENUM, ANNOTATION
+//
+//    @JsonProperty("package")
+//    private String packageName;
+//
+//    @JsonProperty("filePath")
+//    private String filePath;
+//
+//    @JsonProperty("fullyQualifiedName")
+//    private String fullyQualifiedName;
+//
+//    @JsonProperty("startLine")
+//    private Integer startLine;
+//
+//    @JsonProperty("endLine")
+//    private Integer endLine;
+//
+//    @JsonProperty("totalLines")
+//    private Integer totalLines;
+//
+//    @JsonProperty("modifiers")
+//    private List<String> modifiers;
+//
+//    @JsonProperty("methodCount")
+//    private Integer methodCount;
+//
+//    @JsonProperty("fieldCount")
+//    private Integer fieldCount;
+//
+//    @JsonProperty("dependencies")
+//    private List<String> dependencies;
+//
+//    @JsonProperty("extendedClasses")
+//    private List<String> extendedClasses;
+//
+//    @JsonProperty("implementedInterfaces")
+//    private List<String> implementedInterfaces;
+//
+//    @JsonProperty("codeSnippet")
+//    private String codeSnippet;
+//
+//    @JsonProperty("complexityScore")
+//    private Integer complexityScore;
 
-    @JsonProperty("chunkType")
-    private String chunkType = "CLASS";
-
-    @JsonProperty("className")
-    private String className;
-
-    @JsonProperty("type")
-    private String type; // CLASS, INTERFACE, ENUM, ANNOTATION
-
-    @JsonProperty("package")
-    private String packageName;
+    // list fields needed
+    @JsonProperty("language")
+    private String language;
 
     @JsonProperty("filePath")
     private String filePath;
 
-    @JsonProperty("fullyQualifiedName")
-    private String fullyQualifiedName;
+    @JsonProperty("chunkId")
+    private String chunkId;
 
-    @JsonProperty("startLine")
-    private Integer startLine;
+    @JsonProperty("kind")
+    private Kind kind;
 
-    @JsonProperty("endLine")
-    private Integer endLine;
+    @JsonProperty("name")
+    private String name;
 
-    @JsonProperty("totalLines")
-    private Integer totalLines;
+    @JsonProperty("parent")
+    private ParentRef parent;
+
+    @JsonProperty("signature")
+    private String signature;
+
+    @JsonProperty("location")
+    private Location location;
+
+    @JsonProperty("imports")
+    private List<String> imports;
 
     @JsonProperty("modifiers")
     private List<String> modifiers;
 
-    @JsonProperty("methodCount")
-    private Integer methodCount;
+    @JsonProperty("symbols")
+    private Symbols symbols;
 
-    @JsonProperty("fieldCount")
-    private Integer fieldCount;
+    @JsonProperty("code")
+    private String code;
 
-    @JsonProperty("dependencies")
-    private List<String> dependencies;
-
-    @JsonProperty("extendedClasses")
-    private List<String> extendedClasses;
-
-    @JsonProperty("implementedInterfaces")
-    private List<String> implementedInterfaces;
-
-    @JsonProperty("codeSnippet")
-    private String codeSnippet;
-
-    @JsonProperty("complexityScore")
-    private Integer complexityScore;
+    @JsonProperty("notes")
+    private Notes notes;
 }
