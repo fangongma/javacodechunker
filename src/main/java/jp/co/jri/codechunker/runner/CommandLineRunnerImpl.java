@@ -4,7 +4,7 @@ import jp.co.jri.codechunker.config.ApplicationProperties;
 import jp.co.jri.codechunker.model.ClassChunk;
 import jp.co.jri.codechunker.model.MethodChunk;
 import jp.co.jri.codechunker.model.ProjectAnalysisResult;
-import jp.co.jri.codechunker.service.ChunkLevel;
+import jp.co.jri.codechunker.model.ChunkLevel;
 import jp.co.jri.codechunker.service.JavaProjectChunkerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.jri.codechunker.service.PerClassOutputService;
@@ -39,7 +39,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             CommandLine cmd = parser.parse(options, args);
 
             if (cmd.hasOption("help")) {
-                formatter.printHelp("java-code-chunker", options);
+                formatter.printHelp("javacodechunker", options);
                 return;
             }
 
@@ -48,7 +48,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
             if (projectPath == null) {
                 System.err.println("Error: Project path is required");
-                formatter.printHelp("java-code-chunker", options);
+                formatter.printHelp("javacodechunker", options);
                 System.exit(1);
             }
 
@@ -114,7 +114,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 if (outputPath == null) {
                     System.err.println("Error: Output file path is required for single file mode");
                     System.err.println("Use --per-class for per-class file mode");
-                    formatter.printHelp("java-code-chunker", options);
+                    formatter.printHelp("javacodechunker", options);
                     System.exit(1);
                 }
 
@@ -138,7 +138,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
         } catch (ParseException e) {
             System.err.println("Error parsing command line: " + e.getMessage());
-            formatter.printHelp("java-code-chunker", options);
+            formatter.printHelp("javacodechunker", options);
             System.exit(1);
         } catch (Exception e) {
             logger.error("Error during analysis: {}", e.getMessage(), e);

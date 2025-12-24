@@ -239,6 +239,7 @@ public class PerClassOutputService {
         String packageName = cu.getPackageDeclaration()
                 .map(p -> p.getNameAsString())
                 .orElse("");
+        logger.info("***packageName: {}", packageName);
 
         cu.accept(new VoidVisitorAdapter<Void>() {
             @Override
@@ -354,8 +355,10 @@ public class PerClassOutputService {
     /**
      * Creates a ClassChunk from TypeDeclaration
      */
-    private ClassChunk createClassChunk(TypeDeclaration<?> typeDecl, Path filePath,
-                                        String packageName, String type) {
+    private ClassChunk createClassChunk(TypeDeclaration<?> typeDecl,
+                                        Path filePath,
+                                        String packageName,
+                                        String type) {
         String className = typeDecl.getNameAsString();
 
         ClassChunk.ClassChunkBuilder builder = ClassChunk.builder();
@@ -364,39 +367,25 @@ public class PerClassOutputService {
                 //.type(type)
                 //.packageName(packageName)
                 //.filePath(filePath.toAbsolutePath().toString())
-                //.fullyQualifiedName(packageName.isEmpty() ? className : packageName + "." + className);
 
-        // Line information
-        typeDecl.getRange().ifPresent(range -> {
-//            builder.startLine(range.begin.line)
-//                    .endLine(range.end.line)
-//                    .totalLines(range.end.line - range.begin.line + 1);
-            builder.location(new Location(range.begin.line, range.end.line));
-        });
+        builder.fullyQualifiedName(packageName.isEmpty() ? className : packageName + "." + className);
 
-        // Modifiers
-        List<String> modifiers = new ArrayList<>();
-        for (com.github.javaparser.ast.Modifier mod : typeDecl.getModifiers()) {
-            modifiers.add(mod.toString());
-        }
-        builder.modifiers(modifiers);
-        //builder.modifiers2(modifiers);
+        // #1.language - value["java"]
+        builder.language("java");
 
-        // Counts
-//        builder.methodCount(typeDecl.getMethods().size())
-//                .fieldCount(typeDecl.getFields().size());
+        // #2.filePath - full path to the analyzed java class file
+        builder.filePath(filePath.toAbsolutePath().toString());
 
-        // Dependencies
-        List<String> dependencies = new ArrayList<>();
-        typeDecl.findCompilationUnit().ifPresent(cu -> {
-            for (com.github.javaparser.ast.ImportDeclaration imp : cu.getImports()) {
-                dependencies.add(imp.getNameAsString());
-            }
-        });
-//        builder.dependencies(dependencies);
-        builder.imports(dependencies);
+        // #3.chunkId - full package path of the analyzed java class
+        builder.chunkId(packageName.isEmpty() ? className : packageName + "." + className);
 
-        // Inheritance
+        // #4.kind - value["CLASS"]
+        builder.kind(Kind.CLASS);
+
+        // #5.name - get class name of the java class
+        builder.name(className);
+
+        // #6.parent - to extract parent classes and interfaces
         if (typeDecl instanceof ClassOrInterfaceDeclaration) {
             ClassOrInterfaceDeclaration classDecl = (ClassOrInterfaceDeclaration) typeDecl;
             List<String> extendedClasses = new ArrayList<>();
@@ -412,41 +401,58 @@ public class PerClassOutputService {
             builder.parent(new ParentRef(packageName, Stream.concat(extendedClasses.stream(), implementedInterfaces.stream()).collect(Collectors.toList())));
         }
 
-        // Code snippet
-        String code = typeDecl.toString();
-        int maxSnippetLength = properties.getChunk().getMaxSnippetLength();
-        logger.debug("maxSnippetLength = ", maxSnippetLength);
-        logger.debug("code length = ", code);
-//        builder.codeSnippet(code.length() > maxSnippetLength ?
-//                code.substring(0, maxSnippetLength) + "..." : code);
-        builder.code(code);
+        // #7.signature - to be enhanced (no direct way to extract class signature
+        builder.signature("siganture");
 
-        // Complexity
-//        builder.complexityScore(metricsCalculator.calculateComplexity(typeDecl));
+        // #8.location - to get the start line and end line of the class
+        typeDecl.getRange().ifPresent(range -> {
+            builder.location(new Location(range.begin.line, range.end.line));
+        });
 
+        // #9.imports - to get all the import statements of the java class
+        List<String> dependencies = new ArrayList<>();
+
+        typeDecl.findCompilationUnit().ifPresent(cu -> {
+            for (com.github.javaparser.ast.ImportDeclaration imp : cu.getImports()) {
+                dependencies.add(imp.getNameAsString());
+            }
+        });
+
+        builder.imports(dependencies);
+
+        // #10.modifiers - to get the modifider of the class
+        List<String> modifiers = new ArrayList<>();
+
+        for (com.github.javaparser.ast.Modifier mod : typeDecl.getModifiers()) {
+            modifiers.add(mod.toString());
+        }
+
+        builder.modifiers(modifiers);
+
+        // #11.symbols - to be enhanced (no direct way to extract those info
         Symbols.SymbolsBuilder symbolsBuilder = Symbols.builder();
         symbolsBuilder.classes(null);
         symbolsBuilder.methods(null);
         symbolsBuilder.fields(null);
         symbolsBuilder.variables(null);
 
+        builder.symbols(symbolsBuilder.build());
+
+        // #12.code - to extract the code of the java class
+        String code = typeDecl.toString();
+
+        int maxSnippetLength = properties.getChunk().getMaxSnippetLength();
+        logger.debug("maxSnippetLength = {}", maxSnippetLength);
+        logger.debug("code length = {}", code.length());
+
+        builder.code(code);
+
+        // #13.notes - to add the notes
         Notes.NotesBuilder notesBuilder = Notes.builder();
         notesBuilder.missingData(null);
         notesBuilder.extractionWarnings(null);
 
-        builder.language("java")
-                .filePath(filePath.toAbsolutePath().toString())
-                .chunkId(packageName)
-                .kind(Kind.CLASS)
-                .name(className)
-                //.parent(packageName.isEmpty() ? className : packageName + "." + className)
-                .signature("siganture")
-                //.location()
-                //.imports()
-                //.modifiers2()
-                .symbols(symbolsBuilder.build())
-                //.code2()
-                .notes(notesBuilder.build());
+        builder.notes(notesBuilder.build());
 
         return builder.build();
     }
@@ -539,8 +545,8 @@ public class PerClassOutputService {
      * Saves a single class chunk to JSON file (class-level output)
      */
     private void saveClassChunkToJson(ClassChunk classChunk, String outputDir) throws IOException {
-        //String fileName = generateFileName(classChunk.getFullyQualifiedName(), "class");
-        String fileName = "test.class";
+        String fileName = generateFileName(classChunk.getFullyQualifiedName(), "class");
+
         File outputFile = new File(outputDir, fileName);
 
         try (FileWriter writer = new FileWriter(outputFile)) {

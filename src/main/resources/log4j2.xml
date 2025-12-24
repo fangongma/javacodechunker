@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
+<Properties>
+    <Property name="LOG_DIR">D:\\Learning\\Git\\_Log\\javacodechunker\\logs</Property>
+</Properties>
 <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-        <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] %c - %msg%n"/>
+        <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] %L %c - %msg%n"/>
     </Console>
 
     <!-- Rolling File Output -->
-    <RollingFile name="RollingFile" fileName="D:\\Learning\\Git\\_Log\\javacodechunker\\logs\\codechunker.log"
-                 filePattern="D:\\Learning\\Git\\_Log\\javacodechunker\\logs\\codechunker-%d{yyyy-MM-dd}-%i.log.gz">
+    <RollingFile name="RollingFile" fileName="${LOG_DIR}\\codechunker.log"
+                 filePattern="${LOG_DIR}\\archive\\codechunker-%d{yyyy-MM-dd}-%i.log.gz">
         <PatternLayout>
-            <Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] %c - %msg%n</Pattern>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] %L %c - %msg%n</Pattern>
         </PatternLayout>
         <Policies>
             <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-            <SizeBasedTriggeringPolicy size="20MB"/>
+            <SizeBasedTriggeringPolicy size="100KB"/>
         </Policies>
-        <DefaultRolloverStrategy max="7"/>
+        <DefaultRolloverStrategy max="15">
+            <Delete basePath="${LOG_DIR}\\archive" maxDepth="1">
+                <IfFileName glob="codechunker-*.log.gz"/>
+                <IfLastModified age="7d"/>
+            </Delete>
+        </DefaultRolloverStrategy>
     </RollingFile>
 </Appenders>
 

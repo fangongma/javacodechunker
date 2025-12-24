@@ -1,4 +1,4 @@
-package jp.co.jri.codechunker.service;
+package jp.co.jri.codechunker.model;
 
 public enum ChunkLevel {
     CLASS_LEVEL("CLASS"),
