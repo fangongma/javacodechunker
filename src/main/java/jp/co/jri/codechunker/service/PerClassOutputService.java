@@ -2,6 +2,7 @@ package jp.co.jri.codechunker.service;
 
 import jp.co.jri.codechunker.config.ApplicationProperties;
 import jp.co.jri.codechunker.model.*;
+import jp.co.jri.codechunker.model.chunk.*;
 import jp.co.jri.codechunker.util.FileFinder;
 import jp.co.jri.codechunker.util.MetricsCalculator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +46,8 @@ public class PerClassOutputService {
                                                       String outputDir) throws IOException {
 
         logger.info("Generating class files for project: {}", projectPath);
+        logger.info("Include patterns: {}", includePatterns);
+        logger.info("Exclude patterns: {}", excludePatterns);
         logger.info("Output directory: {}", outputDir);
         logger.info("Mode: One JSON file per class (class info only)");
 
@@ -85,18 +88,10 @@ public class PerClassOutputService {
                         saveClassChunkToJson(classChunk, outputDir);
                         totalClasses++;
 
-//                        summary.addClassFile(
-//                                generateFileName(classChunk.getFullyQualifiedName(), "class"),
-//                                classChunk.getFullyQualifiedName(),
-//                                classChunk.getType(),
-//                                classChunk.getMethodCount(),
-//                                "CLASS"
-//                        );
-
                         summary.addClassFile(
-                                "fullyqualifiedname",
-                                "fullyqualifiedname",
-                                "class",
+                                generateFileName(classChunk.getChunkId(),"class"),
+                                classChunk.getChunkId(),
+                                classChunk.getKind().name(),
                                 999,
                                 "CLASS"
                         );

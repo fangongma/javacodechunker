@@ -1,7 +1,7 @@
 package jp.co.jri.codechunker.runner;
 
 import jp.co.jri.codechunker.config.ApplicationProperties;
-import jp.co.jri.codechunker.model.ClassChunk;
+import jp.co.jri.codechunker.model.chunk.ClassChunk;
 import jp.co.jri.codechunker.model.MethodChunk;
 import jp.co.jri.codechunker.model.ProjectAnalysisResult;
 import jp.co.jri.codechunker.model.ChunkLevel;

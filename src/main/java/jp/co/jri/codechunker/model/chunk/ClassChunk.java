@@ -1,4 +1,4 @@
-package jp.co.jri.codechunker.model;
+package jp.co.jri.codechunker.model.chunk;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

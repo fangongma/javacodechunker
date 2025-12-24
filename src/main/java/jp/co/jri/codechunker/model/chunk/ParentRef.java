@@ -1,4 +1,4 @@
-package jp.co.jri.codechunker.model;
+package jp.co.jri.codechunker.model.chunk;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -15,11 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "classes", "methods", "fields", "variables"
+        "namespace", "classes"
 })
-public class Symbols {
+public class ParentRef {
+    private String namespace;
     private List<String> classes;
-    private List<String> methods;
-    private List<String> fields;
-    private List<String> variables;
 }

@@ -82,6 +82,13 @@ public class FileFinder {
         });
 
         logger.info("Found {} Java files to analyze", javaFiles.size());
+
+        if(javaFiles != null && javaFiles.size() >= 0) {
+            for(Path p: javaFiles){
+                logger.info(p.toString());
+            }
+        }
+
         return javaFiles;
     }
 }

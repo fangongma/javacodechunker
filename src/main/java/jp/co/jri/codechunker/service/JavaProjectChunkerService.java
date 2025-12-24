@@ -1,6 +1,10 @@
 package jp.co.jri.codechunker.service;
 
 import jp.co.jri.codechunker.model.*;
+import jp.co.jri.codechunker.model.chunk.ClassChunk;
+import jp.co.jri.codechunker.model.chunk.Kind;
+import jp.co.jri.codechunker.model.chunk.Location;
+import jp.co.jri.codechunker.model.chunk.ParentRef;
 import jp.co.jri.codechunker.util.FileFinder;
 import jp.co.jri.codechunker.util.MetricsCalculator;
 import com.fasterxml.jackson.databind.ObjectMapper;
