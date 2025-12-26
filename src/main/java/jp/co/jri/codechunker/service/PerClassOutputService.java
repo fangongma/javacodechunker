@@ -11,6 +11,8 @@ import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import jp.co.jri.codechunker.util.SignatureExtractor;
+import jp.co.jri.codechunker.util.SymbolsExtractor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,7 @@ public class PerClassOutputService {
     private static final Logger logger = LoggerFactory.getLogger(PerClassOutputService.class);
     private final JavaParser javaParser = new JavaParser();
     private final FileFinder fileFinder;
+    //private final SignatureFinder signatureFinder;
     private final MetricsCalculator metricsCalculator;
     private final ObjectMapper objectMapper;
     private final ApplicationProperties properties;
@@ -260,6 +263,8 @@ public class PerClassOutputService {
             }
         }, null);
 
+        SymbolsExtractor.getClassSymbols(cu, classChunks.get(0).getSymbols());
+
         return classChunks;
     }
 
@@ -357,11 +362,6 @@ public class PerClassOutputService {
         String className = typeDecl.getNameAsString();
 
         ClassChunk.ClassChunkBuilder builder = ClassChunk.builder();
-                //.chunkId(generateChunkId(filePath, className, type))
-                //.className(className)
-                //.type(type)
-                //.packageName(packageName)
-                //.filePath(filePath.toAbsolutePath().toString())
 
         builder.fullyQualifiedName(packageName.isEmpty() ? className : packageName + "." + className);
 
@@ -397,7 +397,11 @@ public class PerClassOutputService {
         }
 
         // #7.signature - to be enhanced (no direct way to extract class signature
-        builder.signature("siganture");
+        if (typeDecl instanceof ClassOrInterfaceDeclaration) {
+            ClassOrInterfaceDeclaration classDecl = (ClassOrInterfaceDeclaration) typeDecl;
+
+            builder.signature(SignatureExtractor.getClassSignature(classDecl));
+        }
 
         // #8.location - to get the start line and end line of the class
         typeDecl.getRange().ifPresent(range -> {
@@ -426,10 +430,10 @@ public class PerClassOutputService {
 
         // #11.symbols - to be enhanced (no direct way to extract those info
         Symbols.SymbolsBuilder symbolsBuilder = Symbols.builder();
-        symbolsBuilder.classes(null);
-        symbolsBuilder.methods(null);
-        symbolsBuilder.fields(null);
-        symbolsBuilder.variables(null);
+        symbolsBuilder.classes(new ArrayList<>());
+        symbolsBuilder.methods(new ArrayList<>());
+        symbolsBuilder.fields(new ArrayList<>());
+        symbolsBuilder.variables(new ArrayList<>());
 
         builder.symbols(symbolsBuilder.build());
 
