@@ -300,7 +300,7 @@ public class PerClassOutputService {
                     classMethodsList, fullyQualifiedName, className, packageName, type, filePath);
 
             // Create method chunk
-            MethodChunk methodChunk = createMethodChunk(method, filePath, packageName);
+            ClassChunk methodChunk = createMethodChunk(method, filePath, packageName);
             classMethods.getMethods().add(methodChunk);
         }
 
@@ -315,7 +315,7 @@ public class PerClassOutputService {
                     classMethodsList, fullyQualifiedName, className, packageName, "ENUM", filePath);
 
             for (MethodDeclaration method : enumDecl.getMethods()) {
-                MethodChunk methodChunk = createMethodChunk(method, filePath, packageName);
+                ClassChunk methodChunk = createMethodChunk(method, filePath, packageName);
                 classMethods.getMethods().add(methodChunk);
             }
         }
@@ -459,23 +459,108 @@ public class PerClassOutputService {
     /**
      * Creates a MethodChunk from MethodDeclaration
      */
-    private MethodChunk createMethodChunk(MethodDeclaration method, Path filePath, String packageName) {
+    private ClassChunk createMethodChunk(MethodDeclaration method, Path filePath, String packageName) {
         String methodName = method.getNameAsString();
 
         // Find containing class
-        Optional<ClassOrInterfaceDeclaration> containingClass =
-                method.findAncestor(ClassOrInterfaceDeclaration.class);
-        String className = containingClass.map(ClassOrInterfaceDeclaration::getNameAsString).orElse("");
+        ClassOrInterfaceDeclaration containingClass = method.findAncestor(ClassOrInterfaceDeclaration.class).get();
+        String className = containingClass.getNameAsString();
 
-        MethodChunk.MethodChunkBuilder builder = MethodChunk.builder()
+        ClassChunk.ClassChunkBuilder builder = ClassChunk.builder();
+
+        builder.fullyQualifiedName(packageName.isEmpty() ? className + "." + methodName : packageName + "." + className + "." + methodName);
+
+        // #1.language - value["java"]
+        builder.language("java");
+
+        // #2.filePath - full path to the analyzed java class file
+        builder.filePath(filePath.toAbsolutePath().toString());
+
+        // #3.chunkId - full package path of the analyzed java class
+        builder.chunkId(packageName.isEmpty() ? className : packageName + "." + className);
+
+        // #4.kind - value["METHOD"]
+        builder.kind(Kind.METHOD);
+
+        // #5.name - get class name of the java class
+        builder.name(className);
+
+        // #6.parent - to extract parent classes and interfaces
+        List<String> extendedClasses = new ArrayList<>();
+        for (com.github.javaparser.ast.type.ClassOrInterfaceType ext : containingClass.getExtendedTypes()) {
+            extendedClasses.add(ext.getNameAsString());
+        }
+
+        List<String> implementedInterfaces = new ArrayList<>();
+        for (com.github.javaparser.ast.type.ClassOrInterfaceType imp : containingClass.getImplementedTypes()) {
+            implementedInterfaces.add(imp.getNameAsString());
+        }
+
+        builder.parent(new ParentRef(packageName, Stream.concat(extendedClasses.stream(), implementedInterfaces.stream()).collect(Collectors.toList())));
+
+        // #7.signature - to be enhanced (no direct way to extract class signature
+        if (typeDecl instanceof ClassOrInterfaceDeclaration) {
+            ClassOrInterfaceDeclaration classDecl = (ClassOrInterfaceDeclaration) typeDecl;
+
+            builder.signature(SignatureExtractor.getClassSignature(classDecl));
+        }
+
+        // #8.location - to get the start line and end line of the class
+        typeDecl.getRange().ifPresent(range -> {
+            builder.location(new Location(range.begin.line, range.end.line));
+        });
+
+        // #9.imports - to get all the import statements of the java class
+        List<String> dependencies = new ArrayList<>();
+
+        typeDecl.findCompilationUnit().ifPresent(cu -> {
+            for (com.github.javaparser.ast.ImportDeclaration imp : cu.getImports()) {
+                dependencies.add(imp.getNameAsString());
+            }
+        });
+
+        builder.imports(dependencies);
+
+        // #10.modifiers - to get the modifider of the class
+        List<String> modifiers = new ArrayList<>();
+
+        for (com.github.javaparser.ast.Modifier mod : typeDecl.getModifiers()) {
+            modifiers.add(mod.toString());
+        }
+
+        builder.modifiers(modifiers);
+
+        // #11.symbols - to be enhanced (no direct way to extract those info
+        Symbols.SymbolsBuilder symbolsBuilder = Symbols.builder();
+        symbolsBuilder.classes(new ArrayList<>());
+        symbolsBuilder.methods(new ArrayList<>());
+        symbolsBuilder.fields(new ArrayList<>());
+        symbolsBuilder.variables(new ArrayList<>());
+
+        builder.symbols(symbolsBuilder.build());
+
+        // #12.code - to extract the code of the java class
+        String code = typeDecl.toString();
+
+        int maxSnippetLength = properties.getChunk().getMaxSnippetLength();
+        logger.debug("maxSnippetLength = {}", maxSnippetLength);
+        logger.debug("code length = {}", code.length());
+
+        builder.code(code);
+
+        // #13.notes - to add the notes
+        Notes.NotesBuilder notesBuilder = Notes.builder();
+        notesBuilder.missingData(null);
+        notesBuilder.extractionWarnings(null);
+
+        builder.notes(notesBuilder.build());
+
                 .chunkId(generateChunkId(filePath, methodName, "METHOD"))
                 .methodName(methodName)
                 .className(className)
                 .packageName(packageName)
                 .filePath(filePath.toAbsolutePath().toString())
-                .fullyQualifiedName(packageName.isEmpty() ?
-                        className + "." + methodName :
-                        packageName + "." + className + "." + methodName);
+
 
         // Line information
         method.getRange().ifPresent(range -> {
