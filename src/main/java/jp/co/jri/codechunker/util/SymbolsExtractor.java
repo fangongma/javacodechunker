@@ -1,6 +1,5 @@
 package jp.co.jri.codechunker.util;
 
-import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -8,19 +7,10 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.expr.VariableDeclarationExpr;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.io.StringReader;
-import java.util.*;
-import jp.co.jri.codechunker.model.chunk.Symbols;
+import jp.co.jri.codechunker.model.chunk.data.Symbols;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SymbolsExtractor {
     private static final Logger logger = LoggerFactory.getLogger(SymbolsExtractor.class);

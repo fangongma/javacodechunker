@@ -1,13 +1,11 @@
 package jp.co.jri.codechunker.runner;
 
 import jp.co.jri.codechunker.config.ApplicationProperties;
-import jp.co.jri.codechunker.model.chunk.ClassChunk;
-import jp.co.jri.codechunker.model.MethodChunk;
-import jp.co.jri.codechunker.model.ProjectAnalysisResult;
-import jp.co.jri.codechunker.model.ChunkLevel;
-import jp.co.jri.codechunker.service.JavaProjectChunkerService;
+import jp.co.jri.codechunker.model.chunk.ChunkLevel;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jp.co.jri.codechunker.service.PerClassOutputService;
+import jp.co.jri.codechunker.model.summary.AnalysisSummary;
+import jp.co.jri.codechunker.model.summary.OutputFileInfo;
+import jp.co.jri.codechunker.service.JavaCodeChunkerService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
@@ -22,10 +20,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CommandLineRunnerImpl implements CommandLineRunner {
-
     private static final Logger logger = LoggerFactory.getLogger(CommandLineRunnerImpl.class);
-    private final JavaProjectChunkerService chunkerService;
-    private final PerClassOutputService perClassOutputService;
+    private final JavaCodeChunkerService javaCodeChunkerService;
     private final ApplicationProperties properties;
     private final ObjectMapper objectMapper;
 
@@ -95,43 +91,22 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 logger.info("  Output mode: One JSON file per class");
                 logger.info("  Output directory: {}", outputPath);
 
-                PerClassOutputService.PerClassAnalysisSummary summary;
+                AnalysisSummary summary;
 
                 if (level == ChunkLevel.CLASS_LEVEL) {
                     // Generate class-only files
-                    summary = perClassOutputService.generateClassFiles(
+                    summary = javaCodeChunkerService.generateClassFiles(
                             projectPath, includePatterns, excludePatterns, outputPath);
                 } else {
                     // Generate method-only files
-                    summary = perClassOutputService.generateMethodFiles(
+                    summary = javaCodeChunkerService.generateMethodFiles(
                             projectPath, includePatterns, excludePatterns, outputPath);
                 }
 
                 printPerClassSummary(summary, level);
 
             } else {
-                // Single file mode (original behavior)
-                if (outputPath == null) {
-                    System.err.println("Error: Output file path is required for single file mode");
-                    System.err.println("Use --per-class for per-class file mode");
-                    formatter.printHelp("javacodechunker", options);
-                    System.exit(1);
-                }
-
-                logger.info("  Output mode: Single JSON file");
-                logger.info("  Output file: {}", outputPath);
-
-                if (level == ChunkLevel.CLASS_LEVEL) {
-                    ProjectAnalysisResult<ClassChunk> result = chunkerService.analyzeAtClassLevel(
-                            projectPath, includePatterns, excludePatterns);
-                    chunkerService.saveReportToJson(result, outputPath);
-                    printSingleFileSummary(result, level);
-                } else {
-                    ProjectAnalysisResult<MethodChunk> result = chunkerService.analyzeAtMethodLevel(
-                            projectPath, includePatterns, excludePatterns);
-                    chunkerService.saveReportToJson(result, outputPath);
-                    printSingleFileSummary(result, level);
-                }
+                logger.info("'per-class' option is missing!");
             }
 
             logger.info("Analysis completed successfully!");
@@ -196,38 +171,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         return options;
     }
 
-    private void printSingleFileSummary(ProjectAnalysisResult<?> result, ChunkLevel level) {
-        String separator = "=".repeat(60);
-
-        System.out.println(separator);
-        System.out.println("ANALYSIS COMPLETED SUCCESSFULLY");
-        System.out.println(separator);
-
-        System.out.printf("\nSingle File Analysis Summary:%n");
-        System.out.printf("  Analysis Level: %s%n", level.getValue());
-        System.out.printf("  Project: %s%n", result.getProjectPath());
-        System.out.printf("  Timestamp: %s%n", result.getTimestamp());
-        System.out.printf("  Total Files: %d%n", result.getTotalFiles());
-        System.out.printf("  Processed Files: %d%n", result.getProcessedFiles());
-        System.out.printf("  Files with Errors: %d%n", result.getErrorFiles());
-
-        if (level == ChunkLevel.CLASS_LEVEL) {
-            ProjectAnalysisResult<ClassChunk> classResult = (ProjectAnalysisResult<ClassChunk>) result;
-            System.out.printf("  Total Classes: %d%n", classResult.getTotalClasses());
-            System.out.printf("  Classes in Report: %d%n",
-                    classResult.getChunks() != null ? classResult.getChunks().size() : 0);
-        } else {
-            ProjectAnalysisResult<MethodChunk> methodResult = (ProjectAnalysisResult<MethodChunk>) result;
-            System.out.printf("  Total Methods: %d%n", methodResult.getTotalMethods());
-            System.out.printf("  Methods in Report: %d%n",
-                    methodResult.getChunks() != null ? methodResult.getChunks().size() : 0);
-        }
-
-        System.out.println("\nReport has been saved to a single JSON file!");
-        System.out.println(separator);
-    }
-
-    private void printPerClassSummary(PerClassOutputService.PerClassAnalysisSummary summary, ChunkLevel level) {
+    private void printPerClassSummary(AnalysisSummary summary, ChunkLevel level) {
         String separator = "=".repeat(60);
 
         System.out.println(separator);
@@ -250,7 +194,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
         System.out.println("\nGenerated JSON Files:");
         int count = 0;
-        for (PerClassOutputService.PerClassAnalysisSummary.OutputFileInfo fileInfo : summary.getOutputFiles()) {
+        for (OutputFileInfo fileInfo : summary.getOutputFiles()) {
             if (count < 10) { // Show first 10 files
                 String countInfo = level == ChunkLevel.METHOD_LEVEL ?
                         String.format(" (%d methods)", fileInfo.getCount()) :

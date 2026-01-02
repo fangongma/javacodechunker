@@ -1,4 +1,4 @@
-package jp.co.jri.codechunker.model.chunk;
+package jp.co.jri.codechunker.model.chunk.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -7,15 +7,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "startLine", "endLine"
+        "namespace", "classes"
 })
-public class Location {
-    private Integer startLine;
-    private Integer endLine;
+public class ParentRef {
+    private String namespace;
+    private List<String> classes;
 }

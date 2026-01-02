@@ -1,4 +1,4 @@
-package jp.co.jri.codechunker.model.chunk;
+package jp.co.jri.codechunker.model.chunk.data;
 
 public enum Kind {
     UNKNOWN,
