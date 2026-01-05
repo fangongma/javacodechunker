@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\service\\SftpService.java",
+  "chunkId" : "jp.co.jri.epix.sftp.service.SftpService",
+  "kind" : "CLASS",
+  "name" : "SftpService",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.service",
+    "classes" : [ ]
+  },
+  "signature" : "public class SftpService",
+  "location" : {
+    "startLine" : 19,
+    "endLine" : 88
+  },
+  "imports" : [ "jp.co.jri.epix.sftp.mapper.ApiAccessMapper", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.model.StreamWithFilename", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.integration.file.FileHeaders", "org.springframework.messaging.Message", "org.springframework.messaging.MessageChannel", "org.springframework.messaging.support.MessageBuilder", "org.springframework.stereotype.Service", "java.io.File", "java.io.InputStream", "java.util.List", "java.util.stream.Collectors" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ "SftpService" ],
+    "methods" : [ "SftpService", "uploadFile", "uploadInputStream", "uploadInputStream", "retrieveAllData" ],
+    "fields" : [ "logger", "toSftpChannel", "apiAccessMapper" ],
+    "variables" : [ "message", "message", "messages", "finalMessage", "apiAccessList" ]
+  },
+  "code" : "@Service\r\npublic class SftpService {\r\n\r\n    private static final Logger logger = LogManager.getLogger(SftpService.class);\r\n\r\n    private final MessageChannel toSftpChannel;\r\n\r\n    private final ApiAccessMapper apiAccessMapper;\r\n\r\n    public SftpService(MessageChannel toSftpChannel, ApiAccessMapper apiAccessMapper) {\r\n        this.toSftpChannel = toSftpChannel;\r\n        this.apiAccessMapper = apiAccessMapper;\r\n    }\r\n\r\n    public void uploadFile(File file) {\r\n        try {\r\n            Message<File> message = MessageBuilder.withPayload(file).setHeader(FileHeaders.REMOTE_FILE, file.getName()).build();\r\n            toSftpChannel.send(message);\r\n            logger.debug(\"Upload message sent for: {}\", file.getName());\r\n        } catch (Exception ex) {\r\n            logger.error(\"Upload failed for {}: {}\", file.getName(), ex.getMessage(), ex);\r\n        }\r\n    }\r\n\r\n    public void uploadInputStream(InputStream inputStream, String remoteDirectory, String remoteFilename) {\r\n        try {\r\n            Message<InputStream> message = MessageBuilder.withPayload(inputStream).setHeader(FileHeaders.REMOTE_DIRECTORY, remoteDirectory).setHeader(FileHeaders.REMOTE_FILE, remoteFilename).build();\r\n            toSftpChannel.send(message);\r\n            logger.info(\"Uploaded InputStream to remote file: {} {}\", remoteDirectory, remoteFilename);\r\n        } catch (Exception e) {\r\n            logger.error(\"Failed to upload InputStream to {} {}: {}\", remoteDirectory, remoteFilename, e.getMessage(), e);\r\n        }\r\n    }\r\n\r\n    public void uploadInputStream(List<StreamWithFilename> items, String remoteDirectory) {\r\n        try {\r\n            List<Message<InputStream>> messages = items.stream().map(item -> MessageBuilder.withPayload(item.getStream()).setHeader(FileHeaders.REMOTE_FILE, item.getFilename()).setHeader(FileHeaders.REMOTE_DIRECTORY, remoteDirectory).build()).collect(Collectors.toList());\r\n            Message<List<Message<InputStream>>> finalMessage = MessageBuilder.withPayload(messages).build();\r\n            toSftpChannel.send(finalMessage);\r\n            logger.info(\"Uploaded InputStream to remote file: {} {}\", remoteDirectory);\r\n        } catch (Exception e) {\r\n            logger.error(\"Failed to upload InputStream to {} {}: {}\", remoteDirectory, e.getMessage(), e);\r\n        }\r\n    }\r\n\r\n    public List<ApiAccess> retrieveAllData(String application) {\r\n        List<ApiAccess> apiAccessList = apiAccessMapper.findAllByApplication(\"Trade\");\r\n        if (apiAccessList.size() > 0) {\r\n            return apiAccessList;\r\n        }\r\n        return null;\r\n    }\r\n}",
+  "notes" : { }
+}

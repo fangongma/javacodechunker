@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\config\\MyBatisConfig.java",
+  "chunkId" : "jp.co.jri.epix.sftp.config.MyBatisConfig",
+  "kind" : "CLASS",
+  "name" : "MyBatisConfig",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.config",
+    "classes" : [ "Object", "Comparable" ]
+  },
+  "signature" : "public class MyBatisConfig extends Object implements Comparable",
+  "location" : {
+    "startLine" : 14,
+    "endLine" : 27
+  },
+  "imports" : [ "org.apache.ibatis.session.SqlSessionFactory", "org.mybatis.spring.SqlSessionFactoryBean", "org.mybatis.spring.annotation.MapperScan", "org.mybatis.spring.mapper.MapperScannerConfigurer", "org.springframework.boot.jdbc.DataSourceBuilder", "org.springframework.context.annotation.Bean", "org.springframework.context.annotation.Configuration", "org.springframework.core.io.support.PathMatchingResourcePatternResolver", "javax.sql.DataSource" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ "MyBatisConfig" ],
+    "methods" : [ "sqlSessionFactory" ],
+    "fields" : [ ],
+    "variables" : [ "ssf" ]
+  },
+  "code" : "@Configuration\r\n@MapperScan(\"jp.co.jri.epix.sftp.mapper\")\r\npublic class MyBatisConfig extends Object implements Comparable {\r\n\r\n    @Bean\r\n    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {\r\n        SqlSessionFactoryBean ssf = new SqlSessionFactoryBean();\r\n        ssf.setDataSource(dataSource);\r\n        ssf.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(\"classpath:/mappers/*.xml\"));\r\n        return ssf.getObject();\r\n    }\r\n}",
+  "notes" : { }
+}

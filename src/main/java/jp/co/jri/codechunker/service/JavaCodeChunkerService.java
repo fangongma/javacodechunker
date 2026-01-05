@@ -522,7 +522,7 @@ public class JavaCodeChunkerService {
             builder.kind(Kind.METHOD);
 
             // #5.name - get class name of the java class
-            builder.name(className);
+            builder.name(methodName);
 
             // #6.parent - to extract parent classes and interfaces
             List<String> extendedClasses = new ArrayList<>();
@@ -707,15 +707,19 @@ public class JavaCodeChunkerService {
      * Saves methods of a single class to JSON file (method-level output)
      */
     private void saveMethodsToJson(ClassInfo classMethods, String outputDir) throws IOException {
-        String fileName = generateFileName(classMethods.getFullyQualifiedName(), "methods");
-        File outputFile = new File(outputDir, fileName);
+        List<ChunkData> chunkDataList = classMethods.getMethods();
 
-        try (FileWriter writer = new FileWriter(outputFile)) {
-            objectMapper.writerWithDefaultPrettyPrinter()
-                    .writeValue(writer, classMethods);
+        for(ChunkData chunkData : chunkDataList) {
+            String fileName = generateFileName(classMethods.getFullyQualifiedName(), chunkData.getName() + "_methods");
+            File outputFile = new File(outputDir, fileName);
+
+            try (FileWriter writer = new FileWriter(outputFile)) {
+                objectMapper.writerWithDefaultPrettyPrinter()
+                        .writeValue(writer, chunkData);
+            }
+
+            logger.debug("Saved methods to: {}", outputFile.getAbsolutePath());
         }
-
-        logger.debug("Saved methods to: {}", outputFile.getAbsolutePath());
     }
 
     /**

@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\ApiAccess.java",
+  "chunkId" : "jp.co.jri.epix.sftp.model.ApiAccess",
+  "kind" : "CLASS",
+  "name" : "ApiAccess",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.model",
+    "classes" : [ ]
+  },
+  "signature" : "public class ApiAccess",
+  "location" : {
+    "startLine" : 5,
+    "endLine" : 51
+  },
+  "imports" : [ "java.sql.Date" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ "ApiAccess" ],
+    "methods" : [ "getApplication", "setApplication", "getComponent", "setComponent", "getApiKey", "setApiKey", "getExpiryDate", "setExpiryDate", "getNeverExpired", "setNeverExpired" ],
+    "fields" : [ "application", "component", "apiKey", "expiryDate", "neverExpired" ],
+    "variables" : [ ]
+  },
+  "code" : "public class ApiAccess {\r\n\r\n    private String application;\r\n\r\n    private String component;\r\n\r\n    private String apiKey;\r\n\r\n    private Date expiryDate;\r\n\r\n    private Character neverExpired;\r\n\r\n    public String getApplication() {\r\n        return application;\r\n    }\r\n\r\n    public void setApplication(String application) {\r\n        this.application = application;\r\n    }\r\n\r\n    public String getComponent() {\r\n        return component;\r\n    }\r\n\r\n    public void setComponent(String component) {\r\n        this.component = component;\r\n    }\r\n\r\n    public String getApiKey() {\r\n        return apiKey;\r\n    }\r\n\r\n    public void setApiKey(String apiKey) {\r\n        this.apiKey = apiKey;\r\n    }\r\n\r\n    public Date getExpiryDate() {\r\n        return expiryDate;\r\n    }\r\n\r\n    public void setExpiryDate(Date expiryDate) {\r\n        this.expiryDate = expiryDate;\r\n    }\r\n\r\n    public Character getNeverExpired() {\r\n        return neverExpired;\r\n    }\r\n\r\n    public void setNeverExpired(Character neverExpired) {\r\n        this.neverExpired = neverExpired;\r\n    }\r\n}",
+  "notes" : { }
+}

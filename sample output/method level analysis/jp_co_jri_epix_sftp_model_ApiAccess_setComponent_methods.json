@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\ApiAccess.java",
+  "chunkId" : "jp.co.jri.epix.sftp.model.ApiAccess",
+  "kind" : "METHOD",
+  "name" : "setComponent",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.model",
+    "classes" : [ ]
+  },
+  "signature" : "public  void setComponent(String component)",
+  "location" : {
+    "startLine" : 24,
+    "endLine" : 26
+  },
+  "imports" : [ "java.sql.Date" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public void setComponent(String component) {\r\n    this.component = component;\r\n}",
+  "notes" : { }
+}

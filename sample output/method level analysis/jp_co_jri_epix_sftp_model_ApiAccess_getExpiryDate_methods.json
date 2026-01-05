@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\ApiAccess.java",
+  "chunkId" : "jp.co.jri.epix.sftp.model.ApiAccess",
+  "kind" : "METHOD",
+  "name" : "getExpiryDate",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.model",
+    "classes" : [ ]
+  },
+  "signature" : "public  Date getExpiryDate()",
+  "location" : {
+    "startLine" : 36,
+    "endLine" : 38
+  },
+  "imports" : [ "java.sql.Date" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public Date getExpiryDate() {\r\n    return expiryDate;\r\n}",
+  "notes" : { }
+}

@@ -1,0 +1,54 @@
+{
+  "projectPath" : "D:\\Learning\\Git\\sftp\\src\\main\\java",
+  "analysisType" : "CLASS_ONLY",
+  "outputDirectory" : "D:\\Learning\\Git\\sftp\\output11",
+  "timestamp" : "2026-01-05T16:29:55.8167891",
+  "totalFiles" : 7,
+  "totalClasses" : 7,
+  "totalMethods" : null,
+  "processedFiles" : 7,
+  "errorFiles" : 0,
+  "outputFiles" : [ {
+    "fileName" : "jp_co_jri_epix_sftp_config_MyBatisConfig_class.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.config.MyBatisConfig",
+    "type" : "CLASS",
+    "count" : 999,
+    "fileType" : "CLASS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_config_SftpConfig_class.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.config.SftpConfig",
+    "type" : "CLASS",
+    "count" : 999,
+    "fileType" : "CLASS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_mapper_ApiAccessMapper_class.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.mapper.ApiAccessMapper",
+    "type" : "CLASS",
+    "count" : 999,
+    "fileType" : "CLASS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_model_ApiAccess_class.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.model.ApiAccess",
+    "type" : "CLASS",
+    "count" : 999,
+    "fileType" : "CLASS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_model_StreamWithFilename_class.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
+    "type" : "CLASS",
+    "count" : 999,
+    "fileType" : "CLASS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_service_SftpService_class.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.service.SftpService",
+    "type" : "CLASS",
+    "count" : 999,
+    "fileType" : "CLASS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_SftpApplication_class.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.SftpApplication",
+    "type" : "CLASS",
+    "count" : 999,
+    "fileType" : "CLASS"
+  } ]
+}

@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\config\\SftpConfig.java",
+  "chunkId" : "jp.co.jri.epix.sftp.config.SftpConfig",
+  "kind" : "METHOD",
+  "name" : "getLocalDirectory",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.config",
+    "classes" : [ ]
+  },
+  "signature" : "public  String getLocalDirectory()",
+  "location" : {
+    "startLine" : 113,
+    "endLine" : 115
+  },
+  "imports" : [ "com.jcraft.jsch.ChannelSftp", "jp.co.jri.epix.sftp.mapper.ApiAccessMapper", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.service.SftpService", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.beans.factory.annotation.Value", "org.springframework.context.annotation.Bean", "org.springframework.context.annotation.Configuration", "org.springframework.expression.common.LiteralExpression", "org.springframework.integration.annotation.IntegrationComponentScan", "org.springframework.integration.channel.DirectChannel", "org.springframework.integration.channel.NullChannel", "org.springframework.integration.config.EnableIntegration", "org.springframework.integration.dsl.IntegrationFlow", "org.springframework.integration.dsl.IntegrationFlows", "org.springframework.integration.file.FileHeaders", "org.springframework.integration.file.remote.RemoteFileTemplate", "org.springframework.integration.file.remote.session.CachingSessionFactory", "org.springframework.integration.handler.advice.ErrorMessageSendingRecoverer", "org.springframework.integration.handler.advice.RequestHandlerRetryAdvice", "org.springframework.integration.sftp.outbound.SftpMessageHandler", "org.springframework.integration.sftp.session.DefaultSftpSessionFactory", "org.springframework.messaging.Message", "org.springframework.messaging.MessageChannel", "org.springframework.messaging.MessageHandler", "org.springframework.retry.backoff.FixedBackOffPolicy", "org.springframework.retry.interceptor.MethodInvocationRecoverer", "org.springframework.retry.interceptor.RetryInterceptorBuilder", "org.springframework.retry.interceptor.RetryOperationsInterceptor", "org.springframework.retry.policy.SimpleRetryPolicy", "org.springframework.retry.support.RetryTemplate" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public String getLocalDirectory() {\r\n    return localDirectory;\r\n}",
+  "notes" : { }
+}

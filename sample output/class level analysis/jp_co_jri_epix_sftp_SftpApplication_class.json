@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\SftpApplication.java",
+  "chunkId" : "jp.co.jri.epix.sftp.SftpApplication",
+  "kind" : "CLASS",
+  "name" : "SftpApplication",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp",
+    "classes" : [ "CommandLineRunner" ]
+  },
+  "signature" : "public class SftpApplication implements CommandLineRunner",
+  "location" : {
+    "startLine" : 20,
+    "endLine" : 101
+  },
+  "imports" : [ "jp.co.jri.epix.sftp.config.SftpConfig", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.model.StreamWithFilename", "jp.co.jri.epix.sftp.service.SftpService", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.boot.CommandLineRunner", "org.springframework.boot.SpringApplication", "org.springframework.boot.autoconfigure.SpringBootApplication", "java.io.ByteArrayInputStream", "java.io.File", "java.io.InputStream", "java.nio.charset.StandardCharsets", "java.util.ArrayList", "java.util.List" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ "SftpApplication" ],
+    "methods" : [ "SftpApplication", "main", "run" ],
+    "fields" : [ "logger", "sftpService", "sftpConfig" ],
+    "variables" : [ "apiAccessList", "streamList", "stream", "i" ]
+  },
+  "code" : "@SpringBootApplication\r\npublic class SftpApplication implements CommandLineRunner {\r\n\r\n    private static final Logger logger = LogManager.getLogger(SftpApplication.class);\r\n\r\n    private final SftpService sftpService;\r\n\r\n    private final SftpConfig sftpConfig;\r\n\r\n    public SftpApplication(SftpService sftpService, SftpConfig sftpConfig) {\r\n        this.sftpService = sftpService;\r\n        this.sftpConfig = sftpConfig;\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        SpringApplication.run(SftpApplication.class, args);\r\n    }\r\n\r\n    @Override\r\n    public void run(String... args) {\r\n        //        String uploadFilename = null;\r\n        //        String uploadDir = null;\r\n        //\r\n        //        for (String arg : args) {\r\n        //            if (arg.startsWith(\"--upload.file=\")) {\r\n        //                uploadFilename = arg.substring(\"--upload.file=\".length());\r\n        //            }\r\n        //            if (arg.startsWith(\"--upload.dir=\")) {\r\n        //                uploadDir = arg.substring(\"--upload.dir=\".length());\r\n        //            }\r\n        //        }\r\n        //\r\n        //        if (uploadFilename != null) {\r\n        //            File file = new File(sftpConfig.getLocalDirectory() + \"\\\\\\\\\" + uploadFilename);\r\n        //            if (!file.exists()) {\r\n        //                logger.error(\"File not found: {}\", file.getAbsolutePath());\r\n        //            } else {\r\n        //                sftpService.uploadFile(file);\r\n        //                logger.info(\"Uploaded file: {}\", file.getAbsolutePath());\r\n        //            }\r\n        //        }\r\n        //\r\n        //        if (uploadDir != null) {\r\n        //            File dir = new File(uploadDir);\r\n        //            if (!dir.isDirectory()) {\r\n        //                logger.error(\"Not a directory: {}\", dir.getAbsolutePath());\r\n        //            } else {\r\n        //                File[] files = dir.listFiles(File::isFile);\r\n        //\r\n        //                if (files == null || files.length == 0) {\r\n        //                    logger.warn(\"No files found in directory: {}\", dir.getAbsolutePath());\r\n        //                } else {\r\n        //                    for (File f : files) {\r\n        //                        sftpService.uploadFile(f);\r\n        //                        logger.info(\"Uploaded file: {}\", f.getAbsolutePath());\r\n        //                    }\r\n        //                }\r\n        //            }\r\n        //        }\r\n        //\r\n        //        if (uploadFilename == null && uploadDir == null) {\r\n        //            logger.warn(\"You must provide --upload.file or --upload.dir\");\r\n        //        }\r\n        //        String content = \"Upload from memory!\";\r\n        //        InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));\r\n        //        sftpService.uploadInputStream(stream, sftpConfig.getRemoteDirectory(),\"upload-from-stream.txt\");\r\n        //InputStream stream = new ByteArrayInputStream(sftpService.retrieveAllData(\"Trade\").get(0).getApiKey().getBytes(StandardCharsets.UTF_8));\r\n        List<ApiAccess> apiAccessList = sftpService.retrieveAllData(\"Trade\");\r\n        List<StreamWithFilename> streamList = new ArrayList<>();\r\n        if (apiAccessList.size() > 0) {\r\n            for (int i = 0; i < apiAccessList.size(); i++) {\r\n                StreamWithFilename stream = new StreamWithFilename();\r\n                stream.setStream(new ByteArrayInputStream(apiAccessList.get(i).getApiKey().getBytes()));\r\n                stream.setFilename(apiAccessList.get(i).getComponent());\r\n                streamList.add(stream);\r\n            }\r\n        }\r\n        sftpService.uploadInputStream(streamList, sftpConfig.getRemoteDirectory());\r\n    }\r\n}",
+  "notes" : { }
+}

@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\config\\SftpConfig.java",
+  "chunkId" : "jp.co.jri.epix.sftp.config.SftpConfig",
+  "kind" : "METHOD",
+  "name" : "sftpSessionFactory",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.config",
+    "classes" : [ ]
+  },
+  "signature" : "public  CachingSessionFactory<ChannelSftp.LsEntry> sftpSessionFactory()",
+  "location" : {
+    "startLine" : 153,
+    "endLine" : 180
+  },
+  "imports" : [ "com.jcraft.jsch.ChannelSftp", "jp.co.jri.epix.sftp.mapper.ApiAccessMapper", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.service.SftpService", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.beans.factory.annotation.Value", "org.springframework.context.annotation.Bean", "org.springframework.context.annotation.Configuration", "org.springframework.expression.common.LiteralExpression", "org.springframework.integration.annotation.IntegrationComponentScan", "org.springframework.integration.channel.DirectChannel", "org.springframework.integration.channel.NullChannel", "org.springframework.integration.config.EnableIntegration", "org.springframework.integration.dsl.IntegrationFlow", "org.springframework.integration.dsl.IntegrationFlows", "org.springframework.integration.file.FileHeaders", "org.springframework.integration.file.remote.RemoteFileTemplate", "org.springframework.integration.file.remote.session.CachingSessionFactory", "org.springframework.integration.handler.advice.ErrorMessageSendingRecoverer", "org.springframework.integration.handler.advice.RequestHandlerRetryAdvice", "org.springframework.integration.sftp.outbound.SftpMessageHandler", "org.springframework.integration.sftp.session.DefaultSftpSessionFactory", "org.springframework.messaging.Message", "org.springframework.messaging.MessageChannel", "org.springframework.messaging.MessageHandler", "org.springframework.retry.backoff.FixedBackOffPolicy", "org.springframework.retry.interceptor.MethodInvocationRecoverer", "org.springframework.retry.interceptor.RetryInterceptorBuilder", "org.springframework.retry.interceptor.RetryOperationsInterceptor", "org.springframework.retry.policy.SimpleRetryPolicy", "org.springframework.retry.support.RetryTemplate" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "@Bean\r\npublic CachingSessionFactory<ChannelSftp.LsEntry> sftpSessionFactory() {\r\n    //        ApiAccess apiAccess = apiAccessMapper.findApiAccessByApplication(\"Trade\");\r\n    //        logger.debug(\"application=\" + apiAccess.getApplication());\r\n    //        logger.debug(\"component=\" + apiAccess.getComponent());\r\n    //        logger.debug(\"apiKey=\" + apiAccess.getApiKey());\r\n    //        logger.debug(\"expiryDate=\" + apiAccess.getExpiryDate());\r\n    //        logger.debug(\"neverExpired=\" + apiAccess.getNeverExpired());\r\n    DefaultSftpSessionFactory factory = new DefaultSftpSessionFactory(true);\r\n    factory.setHost(host);\r\n    factory.setPort(port);\r\n    factory.setUser(user);\r\n    // for user id and password authentication\r\n    factory.setPassword(password);\r\n    // for private key authentication\r\n    //        factory.setPrivateKey(new FileSystemResource(privateKeyPath));\r\n    //        logger.debug(\"privateKeyPath=\" + privateKeyPath);\r\n    //        if (privateKeyPassphrase != null && !privateKeyPassphrase.isEmpty()) {\r\n    //            factory.setPrivateKeyPassphrase(privateKeyPassphrase);\r\n    //            logger.debug(\"privateKeyPassphrase=\" + privateKeyPassphrase);\r\n    //        }\r\n    // optionally disable strict host key checking\r\n    factory.setAllowUnknownKeys(true);\r\n    return new CachingSessionFactory<>(factory);\r\n}",
+  "notes" : { }
+}

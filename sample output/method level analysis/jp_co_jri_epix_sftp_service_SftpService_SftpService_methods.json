@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\service\\SftpService.java",
+  "chunkId" : "jp.co.jri.epix.sftp.service.SftpService",
+  "kind" : "METHOD",
+  "name" : "SftpService",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.service",
+    "classes" : [ ]
+  },
+  "signature" : "public  SftpService(MessageChannel toSftpChannel, ApiAccessMapper apiAccessMapper)",
+  "location" : {
+    "startLine" : 25,
+    "endLine" : 30
+  },
+  "imports" : [ "jp.co.jri.epix.sftp.mapper.ApiAccessMapper", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.model.StreamWithFilename", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.integration.file.FileHeaders", "org.springframework.messaging.Message", "org.springframework.messaging.MessageChannel", "org.springframework.messaging.support.MessageBuilder", "org.springframework.stereotype.Service", "java.io.File", "java.io.InputStream", "java.util.List", "java.util.stream.Collectors" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public SftpService(MessageChannel toSftpChannel, ApiAccessMapper apiAccessMapper) {\r\n    this.toSftpChannel = toSftpChannel;\r\n    this.apiAccessMapper = apiAccessMapper;\r\n}",
+  "notes" : { }
+}

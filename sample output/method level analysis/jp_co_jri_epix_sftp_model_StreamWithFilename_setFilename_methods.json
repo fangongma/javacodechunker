@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\StreamWithFilename.java",
+  "chunkId" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
+  "kind" : "METHOD",
+  "name" : "setFilename",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.model",
+    "classes" : [ ]
+  },
+  "signature" : "public  void setFilename(String filename)",
+  "location" : {
+    "startLine" : 21,
+    "endLine" : 23
+  },
+  "imports" : [ "java.io.InputStream" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public void setFilename(String filename) {\r\n    this.filename = filename;\r\n}",
+  "notes" : { }
+}

@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\mapper\\ApiAccessMapper.java",
+  "chunkId" : "jp.co.jri.epix.sftp.mapper.ApiAccessMapper",
+  "kind" : "METHOD",
+  "name" : "findAllByApplication",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.mapper",
+    "classes" : [ ]
+  },
+  "signature" : "List<ApiAccess> findAllByApplication(String application)",
+  "location" : {
+    "startLine" : 13,
+    "endLine" : 13
+  },
+  "imports" : [ "jp.co.jri.epix.sftp.model.ApiAccess", "org.apache.ibatis.annotations.Mapper", "org.apache.ibatis.annotations.Param", "java.util.List" ],
+  "modifiers" : [ ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "//ApiAccess findApiAccessByApplication(@Param(\"application\") String application);\r\nList<ApiAccess> findAllByApplication(@Param(\"application\") String application);",
+  "notes" : { }
+}

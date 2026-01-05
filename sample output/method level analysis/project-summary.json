@@ -1,0 +1,54 @@
+{
+  "projectPath" : "D:\\Learning\\Git\\sftp\\src\\main\\java",
+  "analysisType" : "METHODS_ONLY",
+  "outputDirectory" : "D:\\Learning\\Git\\sftp\\output10",
+  "timestamp" : "2026-01-05T16:28:53.7469761",
+  "totalFiles" : 7,
+  "totalClasses" : 7,
+  "totalMethods" : 51,
+  "processedFiles" : 7,
+  "errorFiles" : 0,
+  "outputFiles" : [ {
+    "fileName" : "jp_co_jri_epix_sftp_config_MyBatisConfig_methods.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.config.MyBatisConfig",
+    "type" : "CLASS",
+    "count" : 1,
+    "fileType" : "METHODS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_config_SftpConfig_methods.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.config.SftpConfig",
+    "type" : "CLASS",
+    "count" : 27,
+    "fileType" : "METHODS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_mapper_ApiAccessMapper_methods.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.mapper.ApiAccessMapper",
+    "type" : "INTERFACE",
+    "count" : 1,
+    "fileType" : "METHODS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_model_ApiAccess_methods.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.model.ApiAccess",
+    "type" : "CLASS",
+    "count" : 10,
+    "fileType" : "METHODS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_model_StreamWithFilename_methods.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
+    "type" : "CLASS",
+    "count" : 4,
+    "fileType" : "METHODS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_service_SftpService_methods.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.service.SftpService",
+    "type" : "CLASS",
+    "count" : 5,
+    "fileType" : "METHODS"
+  }, {
+    "fileName" : "jp_co_jri_epix_sftp_SftpApplication_methods.json",
+    "fullyQualifiedName" : "jp.co.jri.epix.sftp.SftpApplication",
+    "type" : "CLASS",
+    "count" : 3,
+    "fileType" : "METHODS"
+  } ]
+}

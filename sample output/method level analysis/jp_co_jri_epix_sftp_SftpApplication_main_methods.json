@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\SftpApplication.java",
+  "chunkId" : "jp.co.jri.epix.sftp.SftpApplication",
+  "kind" : "METHOD",
+  "name" : "main",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp",
+    "classes" : [ "CommandLineRunner" ]
+  },
+  "signature" : "public  static  void main(String[] args)",
+  "location" : {
+    "startLine" : 32,
+    "endLine" : 34
+  },
+  "imports" : [ "jp.co.jri.epix.sftp.config.SftpConfig", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.model.StreamWithFilename", "jp.co.jri.epix.sftp.service.SftpService", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.boot.CommandLineRunner", "org.springframework.boot.SpringApplication", "org.springframework.boot.autoconfigure.SpringBootApplication", "java.io.ByteArrayInputStream", "java.io.File", "java.io.InputStream", "java.nio.charset.StandardCharsets", "java.util.ArrayList", "java.util.List" ],
+  "modifiers" : [ "public ", "static " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public static void main(String[] args) {\r\n    SpringApplication.run(SftpApplication.class, args);\r\n}",
+  "notes" : { }
+}

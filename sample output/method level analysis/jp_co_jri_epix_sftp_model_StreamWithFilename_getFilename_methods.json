@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\StreamWithFilename.java",
+  "chunkId" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
+  "kind" : "METHOD",
+  "name" : "getFilename",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.model",
+    "classes" : [ ]
+  },
+  "signature" : "public  String getFilename()",
+  "location" : {
+    "startLine" : 13,
+    "endLine" : 15
+  },
+  "imports" : [ "java.io.InputStream" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public String getFilename() {\r\n    return filename;\r\n}",
+  "notes" : { }
+}

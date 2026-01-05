@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\StreamWithFilename.java",
+  "chunkId" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
+  "kind" : "CLASS",
+  "name" : "StreamWithFilename",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.model",
+    "classes" : [ ]
+  },
+  "signature" : "public class StreamWithFilename",
+  "location" : {
+    "startLine" : 5,
+    "endLine" : 24
+  },
+  "imports" : [ "java.io.InputStream" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ "StreamWithFilename" ],
+    "methods" : [ "getStream", "getFilename", "setStream", "setFilename" ],
+    "fields" : [ "stream", "filename" ],
+    "variables" : [ ]
+  },
+  "code" : "public class StreamWithFilename {\r\n\r\n    private InputStream stream;\r\n\r\n    private String filename;\r\n\r\n    public InputStream getStream() {\r\n        return stream;\r\n    }\r\n\r\n    public String getFilename() {\r\n        return filename;\r\n    }\r\n\r\n    public void setStream(InputStream stream) {\r\n        this.stream = stream;\r\n    }\r\n\r\n    public void setFilename(String filename) {\r\n        this.filename = filename;\r\n    }\r\n}",
+  "notes" : { }
+}

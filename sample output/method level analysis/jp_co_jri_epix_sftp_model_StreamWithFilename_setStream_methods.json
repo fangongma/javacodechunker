@@ -1,0 +1,26 @@
+{
+  "language" : "java",
+  "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\StreamWithFilename.java",
+  "chunkId" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
+  "kind" : "METHOD",
+  "name" : "setStream",
+  "parent" : {
+    "namespace" : "jp.co.jri.epix.sftp.model",
+    "classes" : [ ]
+  },
+  "signature" : "public  void setStream(InputStream stream)",
+  "location" : {
+    "startLine" : 17,
+    "endLine" : 19
+  },
+  "imports" : [ "java.io.InputStream" ],
+  "modifiers" : [ "public " ],
+  "symbols" : {
+    "classes" : [ ],
+    "methods" : [ ],
+    "fields" : [ ],
+    "variables" : [ ]
+  },
+  "code" : "public void setStream(InputStream stream) {\r\n    this.stream = stream;\r\n}",
+  "notes" : { }
+}
