@@ -36,7 +36,7 @@ public class SymbolsExtractor {
         @Override
         public void visit(ClassOrInterfaceDeclaration n, Void arg) {
             // Add class/interface name
-            symbols.getClasses().add(n.getNameAsString());
+            //symbols.getClasses().add(n.getNameAsString());
             super.visit(n, arg);
         }
 
@@ -79,15 +79,15 @@ public class SymbolsExtractor {
             super.visit(n, arg);
         }
 
-        @Override
-        public void visit(com.github.javaparser.ast.expr.VariableDeclarationExpr n, Void arg) {
-            // Add local variable names (only if we're inside a method)
-            if (!currentMethodName.isEmpty()) {
-                for (VariableDeclarator var : n.getVariables()) {
-                    symbols.getVariables().add(var.getNameAsString());
-                }
-            }
-            super.visit(n, arg);
-        }
+//        @Override
+//        public void visit(com.github.javaparser.ast.expr.VariableDeclarationExpr n, Void arg) {
+//            // Add local variable names (only if we're inside a method)
+//            if (!currentMethodName.isEmpty()) {
+//                for (VariableDeclarator var : n.getVariables()) {
+//                    symbols.getVariables().add(var.getNameAsString());
+//                }
+//            }
+//            super.visit(n, arg);
+//        }
     }
 }

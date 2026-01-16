@@ -71,9 +71,20 @@ public class SignatureExtractor {
         StringBuilder signature = new StringBuilder();
 
         // Add modifiers (public, private, static, etc.)
+//        method.getModifiers().forEach(mod -> {
+//            signature.append(mod.toString().toLowerCase()).append(" ");
+//        });
+
+        // Get modifiers
+        List<String> modifierList = new ArrayList<>();
+
         method.getModifiers().forEach(mod -> {
-            signature.append(mod.toString().toLowerCase()).append(" ");
+            modifierList.add(mod.toString().trim());
         });
+
+        if (!modifierList.isEmpty()) {
+            signature.append(String.join(" ", modifierList)).append(" ");
+        }
 
         // Add type parameters if present
         if (!method.getTypeParameters().isEmpty()) {
@@ -128,9 +139,20 @@ public class SignatureExtractor {
         StringBuilder signature = new StringBuilder();
 
         // Add modifiers
+//        constructor.getModifiers().forEach(mod -> {
+//            signature.append(mod.toString().toLowerCase()).append(" ");
+//        });
+
+        // Get modifiers
+        List<String> modifierList = new ArrayList<>();
+
         constructor.getModifiers().forEach(mod -> {
-            signature.append(mod.toString().toLowerCase()).append(" ");
+            modifierList.add(mod.toString().trim());
         });
+
+        if (!modifierList.isEmpty()) {
+            signature.append(String.join(" ", modifierList)).append(" ");
+        }
 
         // Add constructor name
         signature.append(constructor.getNameAsString());

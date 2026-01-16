@@ -35,7 +35,7 @@ public class ChunkData {
     private String chunkId;
 
     @JsonProperty("kind")
-    private Kind kind;
+    private Integer kind;
 
     @JsonProperty("name")
     private String name;

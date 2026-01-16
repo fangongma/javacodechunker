@@ -101,7 +101,7 @@ public class JavaCodeChunkerService {
                         summary.addClassFile(
                                 generateFileName(classChunk.getChunkId(),"class"),
                                 classChunk.getChunkId(),
-                                classChunk.getKind().name(),
+                                classChunk.getKind().toString(),
                                 999,
                                 "CLASS"
                         );
@@ -308,6 +308,7 @@ public class JavaCodeChunkerService {
 
             // Create method chunk
             ChunkData chunkData = createMethodChunkData(method, filePath, packageName);
+            SymbolsExtractor.getClassSymbols(cu, chunkData.getSymbols());
             classMethods.getMethods().add(chunkData);
         }
 
@@ -333,6 +334,7 @@ public class JavaCodeChunkerService {
 
             // Create method chunk
             ChunkData methodChunk = createMethodChunkData(constructor, filePath, packageName);
+            SymbolsExtractor.getClassSymbols(cu, methodChunk.getSymbols());
             classMethods.getMethods().add(methodChunk);
         }
 
@@ -348,11 +350,13 @@ public class JavaCodeChunkerService {
 
             for (MethodDeclaration methodDeclaration : enumDecl.getMethods()) {
                 ChunkData chunkData = createMethodChunkData(methodDeclaration, filePath, packageName);
+                SymbolsExtractor.getClassSymbols(cu, chunkData.getSymbols());
                 classMethods.getMethods().add(chunkData);
             }
 
             for (ConstructorDeclaration constructorDeclaration : enumDecl.getConstructors()) {
                 ChunkData chunkData = createMethodChunkData(constructorDeclaration, filePath, packageName);
+                SymbolsExtractor.getClassSymbols(cu, chunkData.getSymbols());
                 classMethods.getMethods().add(chunkData);
             }
         }
@@ -412,7 +416,7 @@ public class JavaCodeChunkerService {
         builder.chunkId(packageName.isEmpty() ? className : packageName + "." + className);
 
         // #4.kind - value["CLASS"]
-        builder.kind(Kind.CLASS);
+        builder.kind(Kind.CLASS.ordinal());
 
         // #5.name - get class name of the java class
         builder.name(className);
@@ -460,7 +464,7 @@ public class JavaCodeChunkerService {
         List<String> modifiers = new ArrayList<>();
 
         for (com.github.javaparser.ast.Modifier mod : typeDecl.getModifiers()) {
-            modifiers.add(mod.toString());
+            modifiers.add(mod.toString().trim());
         }
 
         builder.modifiers(modifiers);
@@ -486,7 +490,7 @@ public class JavaCodeChunkerService {
         // #13.notes - to add the notes
         Notes.NotesBuilder notesBuilder = Notes.builder();
         notesBuilder.missingData(null);
-        notesBuilder.extractionWarnings(null);
+        notesBuilder.extractionWarnings(new ArrayList<>(List.of("inner class is not supported by this version yet", "local variables won't be included in the analysis")));
 
         builder.notes(notesBuilder.build());
 
@@ -519,7 +523,7 @@ public class JavaCodeChunkerService {
             builder.chunkId(packageName.isEmpty() ? className : packageName + "." + className);
 
             // #4.kind - value["METHOD"]
-            builder.kind(Kind.METHOD);
+            builder.kind(Kind.METHOD.ordinal());
 
             // #5.name - get class name of the java class
             builder.name(methodName);
@@ -561,7 +565,7 @@ public class JavaCodeChunkerService {
             List<String> modifiers = new ArrayList<>();
 
             for (com.github.javaparser.ast.Modifier mod : methodDeclaration.getModifiers()) {
-                modifiers.add(mod.toString());
+                modifiers.add(mod.toString().trim());
             }
 
             builder.modifiers(modifiers);
@@ -587,7 +591,7 @@ public class JavaCodeChunkerService {
             // #13.notes - to add the notes
             Notes.NotesBuilder notesBuilder = Notes.builder();
             notesBuilder.missingData(null);
-            notesBuilder.extractionWarnings(null);
+            notesBuilder.extractionWarnings(new ArrayList<>(List.of("inner class is not supported by this version yet", "local variables won't be included in the analysis")));
 
             builder.notes(notesBuilder.build());
         }  else if(node instanceof ConstructorDeclaration){
@@ -611,7 +615,7 @@ public class JavaCodeChunkerService {
             builder.chunkId(packageName.isEmpty() ? className : packageName + "." + className);
 
             // #4.kind - value["METHOD"]
-            builder.kind(Kind.METHOD);
+            builder.kind(Kind.METHOD.ordinal());
 
             // #5.name - get class name of the java class
             builder.name(className);
@@ -653,7 +657,7 @@ public class JavaCodeChunkerService {
             List<String> modifiers = new ArrayList<>();
 
             for (com.github.javaparser.ast.Modifier mod : constructorDeclaration.getModifiers()) {
-                modifiers.add(mod.toString());
+                modifiers.add(mod.toString().trim());
             }
 
             builder.modifiers(modifiers);
@@ -679,7 +683,7 @@ public class JavaCodeChunkerService {
             // #13.notes - to add the notes
             Notes.NotesBuilder notesBuilder = Notes.builder();
             notesBuilder.missingData(null);
-            notesBuilder.extractionWarnings(null);
+            notesBuilder.extractionWarnings(new ArrayList<>(List.of("inner class is not supported by this version yet", "local variables won't be included in the analysis")));
 
             builder.notes(notesBuilder.build());
         }
