@@ -2,7 +2,7 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\mapper\\ApiAccessMapper.java",
   "chunkId" : "jp.co.jri.epix.sftp.mapper.ApiAccessMapper",
-  "kind" : "CLASS",
+  "kind" : 3,
   "name" : "ApiAccessMapper",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp.mapper",
@@ -14,13 +14,15 @@
     "endLine" : 14
   },
   "imports" : [ "jp.co.jri.epix.sftp.model.ApiAccess", "org.apache.ibatis.annotations.Mapper", "org.apache.ibatis.annotations.Param", "java.util.List" ],
-  "modifiers" : [ "public " ],
+  "modifiers" : [ "public" ],
   "symbols" : {
-    "classes" : [ "ApiAccessMapper" ],
+    "classes" : [ ],
     "methods" : [ "findAllByApplication" ],
     "fields" : [ ],
     "variables" : [ ]
   },
   "code" : "@Mapper\r\npublic interface ApiAccessMapper {\r\n\r\n    //ApiAccess findApiAccessByApplication(@Param(\"application\") String application);\r\n    List<ApiAccess> findAllByApplication(@Param(\"application\") String application);\r\n}",
-  "notes" : { }
+  "notes" : {
+    "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
+  }
 }

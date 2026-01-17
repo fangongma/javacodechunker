@@ -2,25 +2,27 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\StreamWithFilename.java",
   "chunkId" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
-  "kind" : "METHOD",
+  "kind" : 10,
   "name" : "getFilename",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp.model",
     "classes" : [ ]
   },
-  "signature" : "public  String getFilename()",
+  "signature" : "public String getFilename()",
   "location" : {
     "startLine" : 13,
     "endLine" : 15
   },
   "imports" : [ "java.io.InputStream" ],
-  "modifiers" : [ "public " ],
+  "modifiers" : [ "public" ],
   "symbols" : {
     "classes" : [ ],
-    "methods" : [ ],
-    "fields" : [ ],
+    "methods" : [ "getStream", "getFilename", "setStream", "setFilename" ],
+    "fields" : [ "stream", "filename" ],
     "variables" : [ ]
   },
   "code" : "public String getFilename() {\r\n    return filename;\r\n}",
-  "notes" : { }
+  "notes" : {
+    "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
+  }
 }

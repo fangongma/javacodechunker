@@ -2,25 +2,27 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\config\\MyBatisConfig.java",
   "chunkId" : "jp.co.jri.epix.sftp.config.MyBatisConfig",
-  "kind" : "METHOD",
+  "kind" : 10,
   "name" : "sqlSessionFactory",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp.config",
     "classes" : [ "Object", "Comparable" ]
   },
-  "signature" : "public  SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception",
+  "signature" : "public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception",
   "location" : {
-    "startLine" : 18,
-    "endLine" : 26
+    "startLine" : 20,
+    "endLine" : 28
   },
   "imports" : [ "org.apache.ibatis.session.SqlSessionFactory", "org.mybatis.spring.SqlSessionFactoryBean", "org.mybatis.spring.annotation.MapperScan", "org.mybatis.spring.mapper.MapperScannerConfigurer", "org.springframework.boot.jdbc.DataSourceBuilder", "org.springframework.context.annotation.Bean", "org.springframework.context.annotation.Configuration", "org.springframework.core.io.support.PathMatchingResourcePatternResolver", "javax.sql.DataSource" ],
-  "modifiers" : [ "public " ],
+  "modifiers" : [ "public" ],
   "symbols" : {
     "classes" : [ ],
-    "methods" : [ ],
-    "fields" : [ ],
+    "methods" : [ "sqlSessionFactory", "testMethod" ],
+    "fields" : [ "test", "index" ],
     "variables" : [ ]
   },
   "code" : "@Bean\r\npublic SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {\r\n    SqlSessionFactoryBean ssf = new SqlSessionFactoryBean();\r\n    ssf.setDataSource(dataSource);\r\n    ssf.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(\"classpath:/mappers/*.xml\"));\r\n    return ssf.getObject();\r\n}",
-  "notes" : { }
+  "notes" : {
+    "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
+  }
 }

@@ -1,18 +1,18 @@
 {
   "projectPath" : "D:\\Learning\\Git\\sftp\\src\\main\\java",
   "analysisType" : "METHODS_ONLY",
-  "outputDirectory" : "D:\\Learning\\Git\\sftp\\output10",
-  "timestamp" : "2026-01-05T16:28:53.7469761",
+  "outputDirectory" : "D:\\Learning\\Git\\sftp\\output91",
+  "timestamp" : "2026-01-16T19:22:50.9031994",
   "totalFiles" : 7,
   "totalClasses" : 7,
-  "totalMethods" : 51,
+  "totalMethods" : 52,
   "processedFiles" : 7,
   "errorFiles" : 0,
   "outputFiles" : [ {
     "fileName" : "jp_co_jri_epix_sftp_config_MyBatisConfig_methods.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.config.MyBatisConfig",
     "type" : "CLASS",
-    "count" : 1,
+    "count" : 2,
     "fileType" : "METHODS"
   }, {
     "fileName" : "jp_co_jri_epix_sftp_config_SftpConfig_methods.json",

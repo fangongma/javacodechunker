@@ -2,26 +2,26 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\config\\MyBatisConfig.java",
   "chunkId" : "jp.co.jri.epix.sftp.config.MyBatisConfig",
-  "kind" : 3,
-  "name" : "MyBatisConfig",
+  "kind" : 10,
+  "name" : "testMethod",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp.config",
     "classes" : [ "Object", "Comparable" ]
   },
-  "signature" : "public class MyBatisConfig extends Object implements Comparable",
+  "signature" : "private String testMethod(MyBatisConfig mybatisConfig)",
   "location" : {
-    "startLine" : 14,
-    "endLine" : 33
+    "startLine" : 30,
+    "endLine" : 32
   },
   "imports" : [ "org.apache.ibatis.session.SqlSessionFactory", "org.mybatis.spring.SqlSessionFactoryBean", "org.mybatis.spring.annotation.MapperScan", "org.mybatis.spring.mapper.MapperScannerConfigurer", "org.springframework.boot.jdbc.DataSourceBuilder", "org.springframework.context.annotation.Bean", "org.springframework.context.annotation.Configuration", "org.springframework.core.io.support.PathMatchingResourcePatternResolver", "javax.sql.DataSource" ],
-  "modifiers" : [ "public" ],
+  "modifiers" : [ "private" ],
   "symbols" : {
     "classes" : [ ],
     "methods" : [ "sqlSessionFactory", "testMethod" ],
     "fields" : [ "test", "index" ],
     "variables" : [ ]
   },
-  "code" : "@Configuration\r\n@MapperScan(\"jp.co.jri.epix.sftp.mapper\")\r\npublic class MyBatisConfig extends Object implements Comparable {\r\n\r\n    private String test = null;\r\n\r\n    private int index = 0;\r\n\r\n    @Bean\r\n    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {\r\n        SqlSessionFactoryBean ssf = new SqlSessionFactoryBean();\r\n        ssf.setDataSource(dataSource);\r\n        ssf.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(\"classpath:/mappers/*.xml\"));\r\n        return ssf.getObject();\r\n    }\r\n\r\n    private String testMethod(MyBatisConfig mybatisConfig) {\r\n        return MyBatisConfig.toString();\r\n    }\r\n}",
+  "code" : "private String testMethod(MyBatisConfig mybatisConfig) {\r\n    return MyBatisConfig.toString();\r\n}",
   "notes" : {
     "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
   }

@@ -2,25 +2,27 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\service\\SftpService.java",
   "chunkId" : "jp.co.jri.epix.sftp.service.SftpService",
-  "kind" : "METHOD",
+  "kind" : 10,
   "name" : "uploadFile",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp.service",
     "classes" : [ ]
   },
-  "signature" : "public  void uploadFile(File file)",
+  "signature" : "public void uploadFile(File file)",
   "location" : {
     "startLine" : 32,
     "endLine" : 44
   },
   "imports" : [ "jp.co.jri.epix.sftp.mapper.ApiAccessMapper", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.model.StreamWithFilename", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.integration.file.FileHeaders", "org.springframework.messaging.Message", "org.springframework.messaging.MessageChannel", "org.springframework.messaging.support.MessageBuilder", "org.springframework.stereotype.Service", "java.io.File", "java.io.InputStream", "java.util.List", "java.util.stream.Collectors" ],
-  "modifiers" : [ "public " ],
+  "modifiers" : [ "public" ],
   "symbols" : {
     "classes" : [ ],
-    "methods" : [ ],
-    "fields" : [ ],
+    "methods" : [ "SftpService", "uploadFile", "uploadInputStream", "uploadInputStream", "retrieveAllData" ],
+    "fields" : [ "logger", "toSftpChannel", "apiAccessMapper" ],
     "variables" : [ ]
   },
   "code" : "public void uploadFile(File file) {\r\n    try {\r\n        Message<File> message = MessageBuilder.withPayload(file).setHeader(FileHeaders.REMOTE_FILE, file.getName()).build();\r\n        toSftpChannel.send(message);\r\n        logger.debug(\"Upload message sent for: {}\", file.getName());\r\n    } catch (Exception ex) {\r\n        logger.error(\"Upload failed for {}: {}\", file.getName(), ex.getMessage(), ex);\r\n    }\r\n}",
-  "notes" : { }
+  "notes" : {
+    "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
+  }
 }

@@ -1,8 +1,8 @@
 {
   "projectPath" : "D:\\Learning\\Git\\sftp\\src\\main\\java",
   "analysisType" : "CLASS_ONLY",
-  "outputDirectory" : "D:\\Learning\\Git\\sftp\\output11",
-  "timestamp" : "2026-01-05T16:29:55.8167891",
+  "outputDirectory" : "D:\\Learning\\Git\\sftp\\output41",
+  "timestamp" : "2026-01-16T19:22:44.2138399",
   "totalFiles" : 7,
   "totalClasses" : 7,
   "totalMethods" : null,
@@ -11,43 +11,43 @@
   "outputFiles" : [ {
     "fileName" : "jp_co_jri_epix_sftp_config_MyBatisConfig_class.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.config.MyBatisConfig",
-    "type" : "CLASS",
+    "type" : "3",
     "count" : 999,
     "fileType" : "CLASS"
   }, {
     "fileName" : "jp_co_jri_epix_sftp_config_SftpConfig_class.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.config.SftpConfig",
-    "type" : "CLASS",
+    "type" : "3",
     "count" : 999,
     "fileType" : "CLASS"
   }, {
     "fileName" : "jp_co_jri_epix_sftp_mapper_ApiAccessMapper_class.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.mapper.ApiAccessMapper",
-    "type" : "CLASS",
+    "type" : "3",
     "count" : 999,
     "fileType" : "CLASS"
   }, {
     "fileName" : "jp_co_jri_epix_sftp_model_ApiAccess_class.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.model.ApiAccess",
-    "type" : "CLASS",
+    "type" : "3",
     "count" : 999,
     "fileType" : "CLASS"
   }, {
     "fileName" : "jp_co_jri_epix_sftp_model_StreamWithFilename_class.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.model.StreamWithFilename",
-    "type" : "CLASS",
+    "type" : "3",
     "count" : 999,
     "fileType" : "CLASS"
   }, {
     "fileName" : "jp_co_jri_epix_sftp_service_SftpService_class.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.service.SftpService",
-    "type" : "CLASS",
+    "type" : "3",
     "count" : 999,
     "fileType" : "CLASS"
   }, {
     "fileName" : "jp_co_jri_epix_sftp_SftpApplication_class.json",
     "fullyQualifiedName" : "jp.co.jri.epix.sftp.SftpApplication",
-    "type" : "CLASS",
+    "type" : "3",
     "count" : 999,
     "fileType" : "CLASS"
   } ]

@@ -2,25 +2,27 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\SftpApplication.java",
   "chunkId" : "jp.co.jri.epix.sftp.SftpApplication",
-  "kind" : "METHOD",
+  "kind" : 10,
   "name" : "main",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp",
     "classes" : [ "CommandLineRunner" ]
   },
-  "signature" : "public  static  void main(String[] args)",
+  "signature" : "public static void main(String[] args)",
   "location" : {
     "startLine" : 32,
     "endLine" : 34
   },
   "imports" : [ "jp.co.jri.epix.sftp.config.SftpConfig", "jp.co.jri.epix.sftp.model.ApiAccess", "jp.co.jri.epix.sftp.model.StreamWithFilename", "jp.co.jri.epix.sftp.service.SftpService", "org.apache.logging.log4j.LogManager", "org.apache.logging.log4j.Logger", "org.springframework.boot.CommandLineRunner", "org.springframework.boot.SpringApplication", "org.springframework.boot.autoconfigure.SpringBootApplication", "java.io.ByteArrayInputStream", "java.io.File", "java.io.InputStream", "java.nio.charset.StandardCharsets", "java.util.ArrayList", "java.util.List" ],
-  "modifiers" : [ "public ", "static " ],
+  "modifiers" : [ "public", "static" ],
   "symbols" : {
     "classes" : [ ],
-    "methods" : [ ],
-    "fields" : [ ],
+    "methods" : [ "SftpApplication", "main", "run" ],
+    "fields" : [ "logger", "sftpService", "sftpConfig" ],
     "variables" : [ ]
   },
   "code" : "public static void main(String[] args) {\r\n    SpringApplication.run(SftpApplication.class, args);\r\n}",
-  "notes" : { }
+  "notes" : {
+    "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
+  }
 }

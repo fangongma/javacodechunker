@@ -2,25 +2,27 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\ApiAccess.java",
   "chunkId" : "jp.co.jri.epix.sftp.model.ApiAccess",
-  "kind" : "METHOD",
+  "kind" : 10,
   "name" : "setComponent",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp.model",
     "classes" : [ ]
   },
-  "signature" : "public  void setComponent(String component)",
+  "signature" : "public void setComponent(String component)",
   "location" : {
     "startLine" : 24,
     "endLine" : 26
   },
   "imports" : [ "java.sql.Date" ],
-  "modifiers" : [ "public " ],
+  "modifiers" : [ "public" ],
   "symbols" : {
     "classes" : [ ],
-    "methods" : [ ],
-    "fields" : [ ],
+    "methods" : [ "getApplication", "setApplication", "getComponent", "setComponent", "getApiKey", "setApiKey", "getExpiryDate", "setExpiryDate", "getNeverExpired", "setNeverExpired" ],
+    "fields" : [ "application", "component", "apiKey", "expiryDate", "neverExpired" ],
     "variables" : [ ]
   },
   "code" : "public void setComponent(String component) {\r\n    this.component = component;\r\n}",
-  "notes" : { }
+  "notes" : {
+    "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
+  }
 }

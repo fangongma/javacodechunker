@@ -2,25 +2,27 @@
   "language" : "java",
   "filePath" : "D:\\Learning\\Git\\sftp\\src\\main\\java\\jp\\co\\jri\\epix\\sftp\\model\\ApiAccess.java",
   "chunkId" : "jp.co.jri.epix.sftp.model.ApiAccess",
-  "kind" : "METHOD",
+  "kind" : 10,
   "name" : "getComponent",
   "parent" : {
     "namespace" : "jp.co.jri.epix.sftp.model",
     "classes" : [ ]
   },
-  "signature" : "public  String getComponent()",
+  "signature" : "public String getComponent()",
   "location" : {
     "startLine" : 20,
     "endLine" : 22
   },
   "imports" : [ "java.sql.Date" ],
-  "modifiers" : [ "public " ],
+  "modifiers" : [ "public" ],
   "symbols" : {
     "classes" : [ ],
-    "methods" : [ ],
-    "fields" : [ ],
+    "methods" : [ "getApplication", "setApplication", "getComponent", "setComponent", "getApiKey", "setApiKey", "getExpiryDate", "setExpiryDate", "getNeverExpired", "setNeverExpired" ],
+    "fields" : [ "application", "component", "apiKey", "expiryDate", "neverExpired" ],
     "variables" : [ ]
   },
   "code" : "public String getComponent() {\r\n    return component;\r\n}",
-  "notes" : { }
+  "notes" : {
+    "extractionWarnings" : [ "inner class is not supported by this version yet", "local variables won't be included in the analysis" ]
+  }
 }
